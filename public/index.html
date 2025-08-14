@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MUNDOONLINE v3.7</title>
+  <link rel="stylesheet" href="css/addons.css" />
+  <style>
+    html, body { margin:0; padding:0; background:#0f1115; color:#eaeaea; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    #ui { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+    .panel { width:min(720px, 94vw); background:#16181f; padding:16px; border-radius:16px; box-shadow:0 12px 32px rgba(0,0,0,.45); border:1px solid #2a2e3a; }
+    .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .row + .row { margin-top:12px; }
+    label { font-size:14px; opacity:.9; }
+    input[type="text"] { padding:10px 12px; border-radius:10px; border:1px solid #2a2e3a; background:#0f1218; color:#eaeaea; width:100%; }
+    input[type="color"] { background:#0f1218; border:1px solid #2a2e3a; height:40px; width:64px; border-radius:8px; }
+    button { padding:10px 14px; border-radius:10px; border:none; background:#2d6cdf; color:#fff; font-weight:700; }
+    button.ghost { background:#3b3f4e; }
+    #hud { position:absolute; inset:0; pointer-events:none; }
+    #chat { position:absolute; left:8px; bottom:8px; width:min(420px, 60vw); background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.08); border-radius:12px; pointer-events:auto; }
+    #chatHead { padding:6px 8px; display:flex; align-items:center; gap:8px; font-size:14px; border-bottom:1px solid rgba(255,255,255,.08); }
+    #messages { height:160px; overflow:auto; padding:8px; font-size:14px; }
+    #sendRow { display:flex; gap:8px; padding:8px; }
+    #msg { flex:1; padding:8px; border-radius:8px; border:1px solid #2a2e3a; background:#0f1218; color:#eaeaea; }
+    #roomLabel { margin-left:auto; opacity:.75; }
+    #canvas { width:100vw; height:100vh; display:block; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="960" height="540"></canvas>
+
+  <div id="ui">
+    <div class="panel">
+      <div class="row">
+        <label>Nome</label>
+        <input id="name" type="text" placeholder="Seu nick" />
+      </div>
+      <div class="row">
+        <label>Cores</label>
+        <input id="cHead" type="color" value="#f1c27d" />
+        <input id="cShirt" type="color" value="#3b82f6" />
+        <input id="cPants" type="color" value="#64748b" />
+      </div>
+      <div class="row">
+        <input id="roomId" type="text" placeholder="Código da sala (opcional pra entrar)" />
+      </div>
+      <div class="row">
+        <button id="btnCreate">Criar sala</button>
+        <button id="btnJoin" class="ghost">Entrar na sala</button>
+      </div>
+      <p class="tip" style="opacity:.8; font-size:12px; margin-top:8px;">Controles: Joystick no celular • WASD/Setas no PC • Chat: Enter</p>
+    </div>
+  </div>
+
+  <div id="chat">
+    <div id="chatHead">
+      <strong>Chat</strong>
+      <span id="roomLabel"></span>
+    </div>
+    <div id="messages"></div>
+    <div id="sendRow">
+      <input id="msg" placeholder="Digite..." />
+      <button id="send">Enviar</button>
+    </div>
+  </div>
+
+  <div id="hud"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="joystick.js"></script>
+  <script src="client.js"></script>
+  <script src="plugins/plugin_hub.js"></script>
+  <script src="plugins/hud.js"></script>
+  <script src="plugins/inventory.js"></script>
+  <script src="plugins/vendors.js"></script>
+  <script src="plugins/weapons.js"></script>
+</body>
+</html>
