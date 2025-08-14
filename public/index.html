@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Retro RPG Online</title>
+  <style>
+    html, body { margin:0; padding:0; background:#111; color:#eee; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    #ui { position: absolute; inset: 0; display:flex; align-items:center; justify-content:center; }
+    .panel { width:min(680px, 92vw); background:#1b1b1b; padding:16px; border-radius:16px; box-shadow:0 10px 20px rgba(0,0,0,.4); }
+    .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .row + .row { margin-top:12px; }
+    label { font-size:14px; opacity:.9; }
+    input[type="text"] { padding:10px 12px; border-radius:10px; border:1px solid #333; background:#0f0f0f; color:#eee; width:100%; }
+    input[type="color"] { background:#0f0f0f; border:1px solid #333; height:40px; width:64px; border-radius:8px; }
+    button { padding:12px 16px; border-radius:12px; border:none; background:#2d6cdf; color:white; font-weight:600; cursor:pointer; }
+    button.secondary { background:#444; }
+    .cols { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    .tip { font-size:12px; opacity:.8; }
+    #canvas { position: absolute; inset:0; touch-action:none; }
+    #hud { position:absolute; inset:0; pointer-events:none; }
+    /* Chat */
+    #chat { position:absolute; left:8px; top:8px; width:min(380px, 70vw); background:rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:8px; pointer-events:auto; }
+    #messages { height:160px; overflow:auto; font-size:13px; margin-bottom:6px; background:rgba(0,0,0,.2); border-radius:8px; padding:6px; }
+    #msgInput { width:100%; padding:8px; border-radius:8px; border:1px solid #444; background:#0f0f0f; color:#eee; }
+    /* Joystick */
+    #joystick { position:absolute; bottom:18px; left:18px; width:140px; height:140px; pointer-events:auto; }
+    .hide { display:none !important; }
+    .pill { background:#222; padding:6px 10px; border-radius:999px; font-size:12px; border:1px solid #333;}
+    /* Room pill */
+    #roomPill { position:absolute; top:8px; right:8px; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="hud">
+    <div id="chat" class="hide">
+      <div id="messages"></div>
+      <input id="msgInput" maxlength="200" placeholder="Escreva aqui e aperte Enter..." />
+    </div>
+    <div id="roomPill" class="pill hide"></div>
+    <div id="joystick"></div>
+  </div>
+
+  <div id="ui">
+    <div class="panel">
+      <h2>Retro RPG Online</h2>
+      <p class="tip">Coloque seu nome, escolha as cores do personagem e crie/entre em uma sala.</p>
+      <div class="row">
+        <label>Seu nome</label>
+        <input id="name" type="text" placeholder="Ex: Narrador" maxlength="16"/>
+      </div>
+      <div class="cols">
+        <div>
+          <label>Cor Cabeça</label><br/>
+          <input id="cHead" type="color" value="#f2d5b8"/>
+        </div>
+        <div>
+          <label>Cor Camisa</label><br/>
+          <input id="cShirt" type="color" value="#3aa0ff"/>
+        </div>
+        <div>
+          <label>Cor Calça</label><br/>
+          <input id="cPants" type="color" value="#556b2f"/>
+        </div>
+        <div>
+          <label>ID da sala (para entrar)</label>
+          <input id="roomId" type="text" placeholder="Ex: ABC123" maxlength="8"/>
+        </div>
+      </div>
+      <div class="row" style="justify-content:flex-end">
+        <button id="btnCreate">Criar sala</button>
+        <button id="btnJoin" class="secondary">Entrar na sala</button>
+      </div>
+      <p class="tip">Controles: Joystick no celular • WASD/Setas no PC • Chat: Enter.</p>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="joystick.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>
